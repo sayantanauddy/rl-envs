@@ -1,0 +1,28 @@
+<mujoco>
+    <option gravity="0 0 -9.81" integrator="RK4"> 
+        <flag contact="enable" />
+    </option>
+    <asset>
+        <texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1=".1 .2 .3" rgb2=".2 .3 .4"/>
+        <material name="grid" texture="grid" texrepeat="30 30" reflectance=".2"/>
+        <texture name="wood" type="2d" file="wood.png" />
+        <material name="wood" texture="wood"/>
+    </asset>
+    <worldbody>
+        <light diffuse=".8 .8 .8" pos="0 0 5" dir="0 0 -1"/>
+        <geom name="ground" pos="0 0 0" type="plane" size="5 5 .01" material="grid" friction="0.2 0.2 0.2"/>
+        <body name="object" pos="0.0 0 1.5">
+            <joint type="free"/>
+            <geom type="box" size=".15 .15 .15" rgba="0 .9 0 1" friction="0.2 0.2 0.2" mass="2.0"/>
+        </body>
+        <body name="tool" pos="-0.5 0 1.0">
+            <joint type="slide" axis="1 0 0" name="tool_x"/>
+            <joint type="slide" axis="0 1 0" name="tool_y"/>
+            <geom type="box" size="1.0 1.0 .02" rgba="0.9 0 0 1" friction="0.2 0.2 0.2"/>
+        </body> 
+    </worldbody>
+    <actuator>
+        <position joint="tool_x" name="act_tool_x" kp="100"/>
+        <position joint="tool_y" name="act_tool_y" kp="100"/>
+    </actuator>
+</mujoco>
